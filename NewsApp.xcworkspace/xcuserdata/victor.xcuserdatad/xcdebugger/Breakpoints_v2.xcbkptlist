@@ -14,8 +14,8 @@
             filePath = "NewsApp/APIService/APIService.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
             landmarkName = "getNewsData(param:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "NewsApp/NewsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "tableView(_:cellForRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "NewsApp/NewsViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
             landmarkName = "callFuncToGetNewsData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,13 +62,13 @@
             filePath = "NewsApp/NewsViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
             landmarkName = "getNextNews(pageNumber:)"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "EC1205A6-5C5A-431C-B3F5-AC315069EDD9 - 9ffbc40f1cf6d586"
+                  uuid = "EC1205A6-5C5A-431C-B3F5-AC315069EDD9 - 9ffbc40f1cf6d4cc"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -78,12 +78,12 @@
                   urlString = "file:///Users/victor/Users/victor/Documents/XcodeProjects/NewsApp/NewsApp/NewsViewModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "86"
-                  endingLineNumber = "86"
+                  startingLineNumber = "92"
+                  endingLineNumber = "92"
                   offsetFromSymbolStart = "168">
                </Location>
                <Location
-                  uuid = "EC1205A6-5C5A-431C-B3F5-AC315069EDD9 - 73b61205281cefd8"
+                  uuid = "EC1205A6-5C5A-431C-B3F5-AC315069EDD9 - 73b61205281cee96"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -93,11 +93,27 @@
                   urlString = "file:///Users/victor/Users/victor/Documents/XcodeProjects/NewsApp/NewsApp/NewsViewModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "87"
-                  endingLineNumber = "87"
+                  startingLineNumber = "93"
+                  endingLineNumber = "93"
                   offsetFromSymbolStart = "208">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E9A6A7AD-9463-4506-A6BC-FF8FA45DDD64"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "NewsApp/NewsViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "addDataToCoreData()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

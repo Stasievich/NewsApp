@@ -23,7 +23,7 @@ final class TableViewAnimator {
 }
 
 
-enum TableAnimationFactory {
+enum TableAnimations {
     
     static func makeMoveUpWithFadeAnimation(rowHeight: CGFloat, duration: TimeInterval, delayFactor: TimeInterval) -> TableCellAnimation {
         return { cell, indexPath, _ in

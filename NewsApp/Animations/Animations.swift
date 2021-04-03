@@ -14,7 +14,7 @@ enum TableAnimation {
     func getAnimation() -> TableCellAnimation {
         switch self {
         case .moveUpWithFade(let rowHeight, let duration, let delay):
-            return TableAnimationFactory.makeMoveUpWithFadeAnimation(rowHeight: rowHeight, duration: duration,
+            return TableAnimations.makeMoveUpWithFadeAnimation(rowHeight: rowHeight, duration: duration,
                                                                      delayFactor: delay)
         }
     }

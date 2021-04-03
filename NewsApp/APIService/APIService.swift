@@ -21,7 +21,6 @@ class APIService {
 //            URLQueryItem(name: "apiKey", value: "040de4b205224061bc066bc11a174013"),
 //            URLQueryItem(name: "apiKey", value: "e4b8f2babceb40b8b1b193ff6e8f8b29"),
 //            URLQueryItem(name: "apiKey", value: "4a7bd664e13e4cccad49f14c84792f65"),
-
             URLQueryItem(name: "domains", value: "bbc.com"),
             URLQueryItem(name: "language", value: "en"),
             URLQueryItem(name: "from", value: param["from"]),

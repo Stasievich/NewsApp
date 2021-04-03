@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class NewsViewModel: NSObject {
     
@@ -21,13 +22,13 @@ class NewsViewModel: NSObject {
     let maximumPages = 6
     var fetchingData = false
     var articles: [Article] = []
+    var newsFromCoreData: [NewsData] = []
     var dateDifference: [String: String] = [:]
     let queue = DispatchQueue(label: "thread-safe-obj", attributes: .concurrent)
-
     
     // MARK: - Closure
         
-        // Through these closure, our view model will execute code while some events will occure
+        // Through these closure, our view model will execute code while we refresh our table
         // It will be set up by the view controller
     var reloadTableViewClosure: (()->())?
     
@@ -38,9 +39,7 @@ class NewsViewModel: NSObject {
         self.apiService = APIService()
         callFuncToGetNewsData()
     }
-    
-    
-    
+    // MARK: - Functions for downloading and updating news
     fileprivate func callFuncToGetNewsData() {
         let dateParameters = calculateDate(pageNumber: currentPage)
         self.apiService.getNewsData(param: dateParameters) { (newsData, error) in
@@ -48,9 +47,8 @@ class NewsViewModel: NSObject {
             
             self.updateNewsData(receivedData: newsData)
             self.newsData = newsData
-//            self.fetchFromContext()
-//            self.addDataToCoreData()
-            
+            self.fetchFromContext()
+            self.addDataToCoreData()
         }
     }
     
@@ -64,6 +62,19 @@ class NewsViewModel: NSObject {
                         self.dateDifference[title] = self.getDateDifference(publishedAt: article.publishedAt)
                     }
                 }
+            }
+        }
+    }
+    
+    func getDataAfterSearch(searchText: String) {
+        if let newsArticles = newsData?.articles {
+            if searchText == "" {
+                articles = newsArticles
+            }
+            else {
+                articles = newsArticles.filter({
+                    ($0.title?.lowercased().contains(searchText.lowercased()) ?? false)
+                })
             }
         }
     }
@@ -89,9 +100,10 @@ class NewsViewModel: NSObject {
             if let newArticles = newsData?.articles {
                 self.newsData?.articles?.append(contentsOf: newArticles)
                 self.updateNewsData(receivedData: newsData)
+                self.fetchFromContext()
+                self.addDataToCoreData()
                 self.fetchingData = false
             }
-            
         }
     }
     
@@ -118,5 +130,65 @@ class NewsViewModel: NSObject {
             return Date() - formattedDate
         }
         return nil
+    }
+    
+    // MARK: - Functions for Core Data
+    
+    func addDataToCoreData() {
+        DispatchQueue.main.async {
+            if let articles = self.newsData?.articles {
+                for article in articles {
+                    var nonExistingArticle = 0
+                    for i in self.newsFromCoreData {
+                        if article.title != i.title {
+                            nonExistingArticle += 1
+                        }
+                        else { break }
+                    }
+                    if nonExistingArticle == self.newsFromCoreData.count {
+                        self.saveToContext(news: article)
+                    }
+                }
+            }
+        }
+    }
+    
+    func saveToContext(news: Article) {
+        DispatchQueue.main.async {
+            
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            
+            let managedContext = appDelegate.persistentContainer.viewContext
+            let entity = NSEntityDescription.entity(forEntityName: "NewsData", in: managedContext)!
+            
+            let newsData = NSManagedObject(entity: entity, insertInto: managedContext)
+            
+            newsData.setValue(news.title, forKeyPath: "title")
+            newsData.setValue(news.urlToImage, forKeyPath: "imageUrl")
+            newsData.setValue(news.description, forKey: "newsDescription")
+            
+            do {
+                try managedContext.save()
+                self.newsFromCoreData.append(newsData as! NewsData)
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+        }
+    }
+    
+    func fetchFromContext() {
+        DispatchQueue.main.async {
+            
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            
+            let managedContext = appDelegate.persistentContainer.viewContext
+            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "NewsData")
+
+            do {
+                self.newsFromCoreData = try managedContext.fetch(fetchRequest) as! [NewsData]
+            } catch let error as NSError {
+                print("Could not fetch. \(error), \(error.userInfo)")
+            }
+        }
     }
 }
