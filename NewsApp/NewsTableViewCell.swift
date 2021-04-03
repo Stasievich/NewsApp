@@ -99,7 +99,7 @@ class NewsTableViewCell: UITableViewCell {
             newsPublishedTime.leadingAnchor.constraint(equalTo: newsDescription.trailingAnchor, constant: 5),
             newsPublishedTime.trailingAnchor.constraint(equalTo: mainCellView.trailingAnchor, constant: -5),
             newsPublishedTime.topAnchor.constraint(equalTo: mainCellView.bottomAnchor, constant: -20 + indent),
-            newsPublishedTime.bottomAnchor.constraint(equalTo: mainCellView.bottomAnchor, constant: -5 + indent)
+            newsPublishedTime.bottomAnchor.constraint(equalTo: mainCellView.bottomAnchor, constant: -8 + indent)
         ])
         
         contentView.layoutIfNeeded()

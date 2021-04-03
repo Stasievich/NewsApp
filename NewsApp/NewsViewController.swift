@@ -26,7 +26,7 @@ class NewsViewController: UIViewController {
     
     fileprivate func configureMainView() {
         view.backgroundColor = .white
-        
+        addGradientToView()
     }
     
     fileprivate func configureNewsSearchBar() {
@@ -45,14 +45,14 @@ class NewsViewController: UIViewController {
         ])
     }
     
-    fileprivate func addGradientBasedOnSearchBar() {
+    fileprivate func addGradientToView() {
         let gradient: CAGradientLayer = CAGradientLayer()
         
         gradient.colors = [UIColor.blue.cgColor, UIColor.red.cgColor]
         gradient.locations = [0.0 , 1.0]
         gradient.startPoint = CGPoint(x: 0.0, y: 1.0)
         gradient.endPoint = CGPoint(x: 1.0, y: 1.0)
-        gradient.frame = CGRect(x: 0.0, y: 0.0, width: newsSearchBar.frame.width, height: newsSearchBar.frame.height + view.safeAreaLayoutGuide.layoutFrame.height)
+        gradient.frame = CGRect(x: 0.0, y: 0.0, width: view.frame.width, height: view.frame.height)
         
         view.layer.insertSublayer(gradient, at: 0)
     }
@@ -68,7 +68,7 @@ class NewsViewController: UIViewController {
         newsTableView.delegate = self
         newsTableView.dataSource = self
         newsTableView.register(NewsTableViewCell.self, forCellReuseIdentifier: (cellReuseIdentifier))
-        //        newsTableView.tableHeaderView = newsSearchBar
+        
         view.addConstraints([
             newsTableView.topAnchor.constraint(equalTo: newsSearchBar.bottomAnchor),
             newsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -81,7 +81,6 @@ class NewsViewController: UIViewController {
         newsTableView.refreshControl = UIRefreshControl()
         newsTableView.refreshControl?.attributedTitle = NSAttributedString(string: "Pull To Refresh")
         newsTableView.refreshControl?.addTarget(self, action: #selector(refreshNews), for: UIControl.Event.valueChanged)
-        
     }
     
     override func viewDidLoad() {
@@ -90,9 +89,7 @@ class NewsViewController: UIViewController {
         configureMainView()
         
         configureNewsSearchBar()
-        
-        addGradientBasedOnSearchBar()
-        
+                
         configureNewsTableView()
         
         configureRefreshControl()
@@ -109,13 +106,12 @@ class NewsViewController: UIViewController {
         }
     }
     
-    
     func callToViewModelForUIUpdate() {
         newsViewModel = NewsViewModel()
         
-        self.newsViewModel.reloadTableViewClosure = { [self] () in
+        self.newsViewModel.reloadTableViewClosure = { () in
             DispatchQueue.main.async {
-                    self.newsTableView.reloadDataWithAutoSizingCell()
+                self.newsTableView.reloadDataWithAutoSizingCell()
             }
         }
     }
@@ -197,17 +193,7 @@ extension NewsViewController: UITableViewDataSource {
 
 extension NewsViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if let newsArticles = newsViewModel.newsData?.articles {
-            if searchText == "" {
-                newsViewModel.articles = newsArticles
-            }
-            else {
-                newsViewModel.articles = newsArticles.filter({
-                    ($0.title?.lowercased().contains(searchText.lowercased()) ?? false)
-                })
-            }
-            newsTableView.reloadData()
-        }
-
+        newsViewModel.getDataAfterSearch(searchText: searchText)
+        newsTableView.reloadData()
     }
 }
