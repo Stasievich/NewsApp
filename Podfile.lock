@@ -1,0 +1,20 @@
+PODS:
+  - ExpandableLabel (0.5.2)
+  - Kingfisher (6.2.1)
+
+DEPENDENCIES:
+  - ExpandableLabel
+  - Kingfisher
+
+SPEC REPOS:
+  trunk:
+    - ExpandableLabel
+    - Kingfisher
+
+SPEC CHECKSUMS:
+  ExpandableLabel: c2fab6d27860c572d67134b30522a5917746171d
+  Kingfisher: e71c6fac2aebb1262888cabc2cb13d313362a48f
+
+PODFILE CHECKSUM: 4220ab8556979eff4fb6c057d44e21f7379b33d7
+
+COCOAPODS: 1.10.0
